@@ -1,0 +1,35 @@
+pipeline {
+    agent any 
+
+    stages {
+        stage('Build code') {
+            steps {
+                script {
+                    // Pull the Docker images
+                    sh 'docker-compose pull'
+                }
+            }
+        }
+        
+        stage('Up') {
+            steps {
+                script {
+                    // Start the services defined in docker-compose.yml
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    // Run tests or any other commands
+                    sh 'docker-compose exec myservice ./run_tests.sh'
+                }
+            }
+        }
+
+            }
+        }
+    }
+}
